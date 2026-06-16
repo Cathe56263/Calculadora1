@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora Básica</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(135deg, #ffd6e8, #c8e7ff);
+        }
+
+        .calculadora{
+            width:420px;
+            background:white;
+            padding:30px;
+            border-radius:25px;
+            box-shadow:0 15px 35px rgba(0,0,0,0.2);
+            text-align:center;
+            animation: aparecer 1s ease;
+        }
+
+        @keyframes aparecer{
+            from{
+                opacity:0;
+                transform:translateY(-30px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        h1{
+            color:#ff4f9a;
+            margin-bottom:20px;
+        }
+
+        label{
+            display:block;
+            text-align:left;
+            margin:10px 0 5px;
+            color:#444;
+            font-weight:bold;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            border:2px solid #ffd1e3;
+            border-radius:12px;
+            outline:none;
+            font-size:16px;
+            transition:0.3s;
+        }
+
+        input:focus{
+            border-color:#ff4f9a;
+            box-shadow:0 0 10px rgba(255,79,154,0.4);
+        }
+
+        .botones{
+            display:grid;
+            grid-template-columns:repeat(2, 1fr);
+            gap:12px;
+            margin-top:20px;
+        }
+
+        button{
+            padding:12px;
+            border:none;
+            border-radius:15px;
+            background:#ff7eb3;
+            color:white;
+            font-weight:bold;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        button:hover{
+            background:#ff4f9a;
+            transform:scale(1.05);
+            box-shadow:0 8px 15px rgba(255,79,154,0.4);
+        }
+
+        button:active{
+            transform:scale(0.95);
+        }
+
+        .resultado{
+            margin-top:20px;
+        }
+
+        #resultado{
+            text-align:center;
+            font-weight:bold;
+            color:#ff4f9a;
+            background:#fff0f6;
+        }
+
+        .btn-edad{
+            margin-top:25px;
+            width:100%;
+            background:#6cbcff;
+        }
+
+        .btn-edad:hover{
+            background:#3a9df5;
+        }
+    </style>
+
+    <script>
+        function calcular(operacion) {
+            let num1 = parseFloat(document.getElementById("num1").value);
+            let num2 = parseFloat(document.getElementById("num2").value);
+            let resultado;
+
+            if (isNaN(num1)) {
+                alert("Por favor ingresa el Número 1");
+                return;
+            }
+
+            if (operacion !== "factorial" && isNaN(num2)) {
+                alert("Por favor ingresa el Número 2");
+                return;
+            }
+
+            switch (operacion) {
+                case "suma":
+                    resultado = num1 + num2;
+                    break;
+
+                case "resta":
+                    resultado = num1 - num2;
+                    break;
+
+                case "multiplicar":
+                    resultado = num1 * num2;
+                    break;
+
+                case "dividir":
+                    if (num2 === 0) {
+                        resultado = "No se puede dividir para 0";
+                    } else {
+                        resultado = num1 / num2;
+                    }
+                    break;
+
+                case "potencia":
+                    resultado = Math.pow(num1, num2);
+                    break;
+
+                case "factorial":
+                    resultado = factorial(num1);
+                    break;
+            }
+
+            document.getElementById("resultado").value = resultado;
+        }
+
+        function factorial(n) {
+            if (n < 0) return "No válido";
+            if (!Number.isInteger(n)) return "Solo enteros";
+            if (n === 0 || n === 1) return 1;
+
+            let f = 1;
+            for (let i = 2; i <= n; i++) {
+                f *= i;
+            }
+            return f;
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="calculadora">
+        <h1>🌸 Calculadora Básica 🌸</h1>
+
+        <label>Número 1:</label>
+        <input type="number" id="num1" placeholder="Ingrese el primer número">
+
+        <label>Número 2:</label>
+        <input type="number" id="num2" placeholder="Ingrese el segundo número">
+
+        <div class="botones">
+            <button onclick="calcular('suma')">➕ Suma</button>
+            <button onclick="calcular('resta')">➖ Resta</button>
+            <button onclick="calcular('multiplicar')">✖ Multiplicación</button>
+            <button onclick="calcular('dividir')">➗ División</button>
+            <button onclick="calcular('potencia')">🔢 Potencia</button>
+            <button onclick="calcular('factorial')">❗ Factorial</button>
+        </div>
+
+        <div class="resultado">
+            <label>Resultado:</label>
+            <input type="text" id="resultado" readonly>
+        </div>
+
+        <button class="btn-edad" onclick="window.location.href='edad.html'">
+            🎂 Calcular Edad
+        </button>
+    </div>
+
+</body>
+</html>
